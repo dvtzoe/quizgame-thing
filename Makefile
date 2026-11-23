@@ -4,6 +4,8 @@ PY_FILES := $(shell find src -name "*.py")
 VENV := .venv
 VENV_BIN_DIR := $(VENV)/bin
 
+GAME_ENTRY_POINT := src/game/app.py
+
 QML_BUILD_DIR := qml-build
 QML_DIR := $(QML_BUILD_DIR)/qml
 
@@ -11,7 +13,7 @@ RUFF := $(VENV_BIN_DIR)/ruff
 QML_LINT := $(VENV_BIN_DIR)/pyside6-qmllint
 QML_FORMAT := $(VENV_BIN_DIR)/pyside6-qmlformat
 
-.PHONY: lint lint-fix qml-generate-types clean
+.PHONY: lint lint-fix qml-generate-types clean game
 
 lint:
 	make qml-generate-types
@@ -44,3 +46,6 @@ qml-generate-types:
 clean:
 	rm -rf $(QML_BUILD_DIR)
 	rm -rf $(VENV)
+
+game:
+	$(VENV_BIN_DIR)/python $(GAME_ENTRY_POINT)
