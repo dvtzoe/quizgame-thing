@@ -1,16 +1,19 @@
 import sys
+from pathlib import Path
 
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QLabel
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtQml import QQmlApplicationEngine
 
 
 def main() -> None:
-    app = QApplication(sys.argv)
+    app = QGuiApplication(sys.argv)
+    engine = QQmlApplicationEngine()
 
-    label = QLabel("Hello World", alignment=Qt.AlignmentFlag.AlignCenter)
+    qml_file_path = Path(__file__).parent / "main.qml"
+    engine.load(qml_file_path)
 
-    label.show()
-
+    if not engine.rootObjects():
+        sys.exit(-1)
     sys.exit(app.exec())
 
 
